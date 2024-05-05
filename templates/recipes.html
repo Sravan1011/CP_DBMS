@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ cuisine_name }} Recipes</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(to bottom right, #3182ce, #b6d4e9); /* Example gradient background */
+        }
+        .header {
+            position: absolute;
+            top: 20px; /* Adjust top spacing as needed */
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            z-index: 1; /* Ensure header is above the background animation */
+        }
+        .live-color {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, rgba(255, 0, 0, 0.5), rgba(0, 255, 0, 0.5), rgba(0, 0, 255, 0.5), rgba(255, 0, 0, 0.5));
+            animation: animate-live-color 10s linear infinite;
+            transform: translate(-50%, -50%);
+            z-index: -1;
+        }
+        @keyframes animate-live-color {
+            0% {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+            100% {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
+        }
+        /* Default styles for recipe container */
+        .recipe-container {
+            border: 1px solid transparent;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            transition: all 0.3s ease;
+            border-radius: 0.5rem;
+            padding: 2rem; /* Increase padding for more space */
+            margin: 1rem;
+            width: 100%; /* Ensure containers take full width */
+            max-width: 300px; /* Set a maximum width for better responsiveness */
+            box-sizing: border-box; /* Include padding in the width calculation */
+        }
+        /* Hover styles for recipe container */
+        .recipe-container:hover {
+            border-color: black;
+            background-color: rgba(255, 255, 255, 0.5);
+            color: black;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="live-color"></div>
+    <div class="header">
+        <h1 class="text-3xl font-bold">{{ cuisine_name }} Recipes</h1> <!-- Display cuisine_name in the header -->
+    </div>
+    <div class="container">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 justify-items-center">
+            {% for recipe in recipes %}
+            <div class="border border-white rounded-md p-4 hover:shadow-md transition duration-300 ease-in-out recipe-container">
+                <a href="/recipes/{{ cuisine_id }}/{{ recipe.RecipeID }}" class="text-lg font-semibold">{{ recipe.RecipeName }}</a>
+                <p>Calories: {{ recipe.Calories }}</p>
+                <p>Average Rating: {{ recipe.avg_rating }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cuisines</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gradient-to-br from-purple-500 to-pink-500 text-white">
+    <h1 class="text-3xl font-bold text-center mb-8">Cuisines</h1>
+    <ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 justify-items-center">
+        {% for cuisine in cuisines %}
+        <li class="border border-white rounded-md p-4 hover:shadow-md transition duration-300 ease-in-out">
+            <a href="/recipes/{{ cuisine.cuisine_id }}" class="text-lg font-semibold">{{ cuisine.cuisine_name }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

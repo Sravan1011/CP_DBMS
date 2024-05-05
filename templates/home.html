@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Cookbook</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);
+        }
+
+        /* Default styles for cuisine container */
+        .cuisine-container {
+            border: 1px solid transparent; /* Initially transparent border */
+            background-color: rgba(255, 255, 255, 0.8); /* Initially transparent background */
+            color: black; /* Black text color */
+            transition: all 0.3s ease; /* Smooth transition effect for changes */
+            border-radius: 0.5rem; /* Rounded corners */
+            padding: 1rem;
+        }
+
+        /* Hover styles for cuisine container */
+        .cuisine-container:hover {
+            border-color: black; /* Change border color on hover */
+            background-color: rgba(0, 0, 0, 0.8); /* Change background color on hover */
+            color: white; /* White text color on hover */
+        }
+    </style>
+</head>
+<body>
+
+<div class="navbar bg-gray-800 text-white py-4">
+    <a href="#" class="text-lg px-4">Home</a>
+    <a href="/chefs" class="text-lg px-4">Chefs</a>
+    <a href="/signup" class="text-lg px-4 hover:text-gray-300">Signup</a>
+    <a href="/login" class="text-lg px-4 hover:text-gray-300">Login</a>
+    <a href="#" class="text-lg px-4">About</a>
+</div>
+
+<div class="container mx-auto py-12">
+    <h1 class="text-3xl font-bold mb-6 flex justify-center">Welcome to Recipe Cookbook</h1>
+    <h2 class="text-2xl font-bold mb-6 flex justify-center px-10 pb-10">All Cuisines</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        {% for cuisine in cuisines %}
+        <div class="border border-gray-800 rounded-md p-8 hover:shadow-xl transition duration-350 ease-in-out cuisine-container max-h-28 max-w-1">
+            <a href="{{ url_for('recipes', cuisine_id=cuisine.cuisine_id) }}" class="text-lg font-bold">{{ cuisine.cuisine_name }}</a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<div id="myModal" class="modal fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center ">
+    <div class="modal-content bg-white p-8 rounded-md w-full sm:max-w-md">
+        <span class="close absolute top-4 right-4 text-gray-600 cursor-pointer text-3xl">&times;</span>
+        <h2 class="text-2xl font-bold mb-4">Add Recipe</h2>
+        <form action="/" method="POST">
+            <label for="cuisine">Cuisine:</label><br>
+            <input type="text" id="cuisine" name="cuisine" required class="w-full border border-gray-300 rounded-md py-2 px-3 mb-4"><br>
+
+            <label for="recipe_name">Recipe Name:</label><br>
+            <input type="text" id="recipe_name" name="recipe_name" required class="w-full border border-gray-300 rounded-md py-2 px-3 mb-4"><br>
+
+            <label for="ingredients">Ingredients:</label><br>
+            <textarea id="ingredients" name="ingredients" required class="w-full border border-gray-300 rounded-md py-2 px-3 mb-4"></textarea><br>
+
+            <label for="category">Category:</label><br>
+            <input type="text" id="category" name="category" required class="w-full border border-gray-300 rounded-md py-2 px-3 mb-4"><br>
+
+            <label for="meal_type">Meal Type:</label><br>
+            <input type="text" id="meal_type" name="meal_type" required class="w-full border border-gray-300 rounded-md py-2 px-3 mb-4"><br>
+
+            <label for="procedure">Procedure:</label><br>
+            <textarea id="procedure" name="procedure" required class="w-full border border-gray-300 rounded-md py-2 px-3 mb-4"></textarea><br>
+
+            <input type="submit" value="Submit" class="bg-green-500 text-white px-4 py-2 rounded-md mt-4">
+        </form>
+    </div>
+</div>
+
+<div class="logo fixed bottom-8 right-8 w-16 h-16 bg-green-500 rounded-full flex justify-center items-center cursor-pointer hover:bg-green-600">
+    <span class="text-white text-3xl" onclick="openModal()">+</span>
+</div>
+
+<script>
+    // Get the modal
+    var modal = document.getElementById("myModal");
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks the button, open the modal
+    function openModal() {
+        modal.classList.remove("hidden");
+    }
+
+    // When the user clicks on <span> (x), close the modal
+    function closeModal() {
+        modal.classList.add("hidden");
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            closeModal();
+        }
+    }
+</script>
+
+</body>
+</html>

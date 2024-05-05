@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chefs</title>
+    <!-- Link to Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+    <style>
+        @keyframes animate-live-color {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Helvetica', sans-serif;
+            overflow-x: hidden;
+            background: linear-gradient(45deg, #ff00ff, #00ffff);
+            background-size: 200% 200%;
+            animation: animate-live-color 10s ease infinite;
+        }
+
+        /* Styling for navbar */
+        nav {
+            background-color: rgba(0, 0, 0, 0.8); /* Translucent black background */
+            padding: 1rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav a {
+            color: rgba(255, 255, 255, 0.8); /* Translucent white text */
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #fff; /* White text on hover */
+        }
+
+        /* Styling for chef containers */
+        .chef-container {
+            background-color: rgba(0, 0, 0, 0.5); /* Translucent black background */
+            transition: background-color 0.3s ease;
+        }
+
+        .chef-container:hover {
+            background-color: rgba(0, 0, 0, 0.8); /* Darker translucent black on hover */
+        }
+
+        /* Styling for title */
+        .title-container {
+            text-align: center;
+            padding-top: 5rem; /* Add padding top to move title down */
+            margin-bottom: 2rem; /* Optional: Add margin bottom for spacing */
+        }
+
+        /* Styling for main content container */
+        .main-content {
+            margin-top: 8rem; /* Adjust as needed to position content below navbar and title */
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="container mx-auto">
+        <a href="/" class="hover:text-white px-4 py-2 rounded">Home</a>
+        <a href="/recipes" class="hover:text-white px-4 py-2 rounded">Recipes</a>
+        <a href="/chefs" class="hover:text-white px-4 py-2 rounded">Chefs</a>
+        <a href="#" class="hover:text-white px-4 py-2 rounded">About</a>
+    </div>
+</nav>
+
+<div class="title-container">
+    <h1 class="text-3xl font-bold text-gray-800">Meet Our Chefs</h1>
+</div>
+
+<div class="main-content container mx-auto py-10">
+    <ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+        {% for chef in chefs %}
+        <li>
+            <a href="/chefs/{{ chef['chef_id'] }}/recipes" class="block chef-container shadow-md hover:shadow-lg rounded-lg overflow-hidden" style="height: auto;">
+                <div class="bg-gray-300 flex items-center justify-center">
+                    <img src="{{ chef['image_url'] }}" alt="{{ chef['chef_name'] }}" class="max-h-80 w-full object-cover">
+                </div>
+                <div class="p-4">
+                    <p class="text-gray-100">{{ chef['chef_name'] }}</p>
+                </div>
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+
+</body>
+</html>

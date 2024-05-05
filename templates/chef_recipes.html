@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipes</title>
+    <!-- Include Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+    <style>
+        @keyframes animate-live-color {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Helvetica', sans-serif;
+            overflow-x: hidden;
+            background: linear-gradient(45deg, #ff00ff, #00ffff);
+            background-size: 200% 200%;
+            animation: animate-live-color 10s ease infinite;
+        }
+
+        /* Styling for recipe cards */
+        .recipe-card {
+            transition: background-color 0.3s ease;
+        }
+
+        .recipe-card:hover {
+            background-color: rgba(0, 0, 0, 0.5); /* Translucent black background on hover */
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto text-center py-10">
+        <h1 class="text-3xl font-bold mb-4 text-gray-800">Recipes</h1>
+        <ul class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {% for recipe in recipes %}
+            <li class="bg-white p-4 rounded-md shadow-md recipe-card">
+                <a href="{{ url_for('chef_recipe_details', chef_id=chef_id, recipe_id=recipe.get('recipe_id', None)) }}" class="block text-lg font-semibold hover:text-blue-500">{{ recipe.get('recipe_name', 'Unknown Recipe') }}</a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>
